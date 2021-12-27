@@ -4,7 +4,7 @@ LDFLAGS= -lncurses -ltinfo
 
 SOURCES = src/*
 OBJECTS = $(SOURCES:.c=.0)
-TARGET = ncurses-minecraft
+TARGET = game-of-life
 
 $(TARGET) : $(OBJECTS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
@@ -21,4 +21,4 @@ endif
 
 install:
 	install -d ${DESTDIR}${PREFIX}/bin
-	install -m 755 ncurses-minecraft $(DESTDIR)$(PREFIX)/bin/minecurses
+	install -m 755 game-of-life $(DESTDIR)$(PREFIX)/bin/game-of-life
