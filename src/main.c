@@ -7,6 +7,8 @@
 
 #include "gol.h"
 #include "borders.h"
+#include "functions.h"
+#include "menu.h"
 
 int main(int argc, char *argv[]) {
     // Setting locale for Unicode support
@@ -59,7 +61,7 @@ int main(int argc, char *argv[]) {
     Custom_Border(stdscr, mainBorder, (struct BorderPosition){0, 0, getmaxx(stdscr)-1, getmaxy(stdscr)-2});
 
     // Creating separate window, where simulation will be drawn
-    WINDOW *gol_window = newwin(getmaxy(stdscr)-3, getmaxx(stdscr)-3, 1, 1);
+    WINDOW *gol_window = newwin(getmaxy(stdscr)-3, getmaxx(stdscr)-2, 1, 1);
 
     // Refreshing main window, and simulation window
     refresh();
@@ -114,6 +116,20 @@ int main(int argc, char *argv[]) {
                 break;
             }
 
+            case 'p': case 'P': { // Entering the menu
+                char* choices[] = {
+                    "Quit",
+                    "0.5x Speed",
+                    "test---------",
+                    "",
+                    "Hey!"
+                };
+
+                Display_Menu(choices, 5u);
+
+                break;
+            }
+
             case KEY_RESIZE: { // When resizing the window
                 sim = GOL_Resize(sim, getmaxx(stdscr)-2, getmaxy(stdscr)-3);
                 wresize(gol_window, getmaxx(stdscr)-2, getmaxy(stdscr)-3);
@@ -137,7 +153,7 @@ int main(int argc, char *argv[]) {
         GOL_Render(sim, gol_window, getbegy(gol_window), getbegx(gol_window));
 
         // Menu
-        mvprintw(getmaxy(stdscr)-1, 0, "[F1] Settings  [Space] Pause/Unpause  [Right Arrow] Step Forward [Q or Esc] Quit");
+        mvprintw(getmaxy(stdscr)-1, 0, "[P] Settings  [Space] Pause/Unpause  [Right Arrow] Step Forward [Q or Esc] Quit");
 
         // Refreshing the screen
         wrefresh(gol_window);
